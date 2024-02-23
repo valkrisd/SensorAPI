@@ -29,17 +29,17 @@ public class MeasurementDTO {
     @NotNull(message = "Value should not be empty")
     @Range(min = -100, max = 100, message = "Value should be between -100 and 100")
     @Digits(integer = 3, fraction = 2, message = "Value should be at most 5 digits long")
-    private double value;
+    private Double value;
 
     @Column(name = "is_raining")
     @NotNull(message = "isRaining should not be empty")
-    private boolean isRaining;
+    private Boolean isRaining;
 
     public MeasurementDTO() {
 
     }
 
-    public MeasurementDTO(Sensor sensor, double value, boolean isRaining) {
+    public MeasurementDTO(Sensor sensor, Double value, Boolean isRaining) {
         this.sensor = sensor;
         this.value = value;
         this.isRaining = isRaining;
@@ -53,19 +53,19 @@ public class MeasurementDTO {
         this.sensor = sensor;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean getIsRaining() {
+    public Boolean getIsRaining() {
         return isRaining;
     }
 
-    public void setIsRaining(boolean raining) {
+    public void setIsRaining(Boolean raining) {
         isRaining = raining;
     }
 }

@@ -34,7 +34,8 @@ public class MeasurementsService {
     }
 
     private void enrichMeasurement(Measurement measurement) {
-        sensorRepository.findByName(measurement.getSensor().getName()).ifPresent(measurement::setSensor);
+        // мы должна сами найти сенсор из БД по имени и вставить объект из Hibernate persistence context'а
+        measurement.setSensor(sensorRepository.findByName(measurement.getSensor().getName()).get());
         measurement.setCreatedAt(LocalDateTime.now());
     }
 

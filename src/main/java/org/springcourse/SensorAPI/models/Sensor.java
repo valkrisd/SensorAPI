@@ -2,11 +2,12 @@ package org.springcourse.SensorAPI.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "sensor")
-public class Sensor {
+public class Sensor implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +15,6 @@ public class Sensor {
 
     @Column(name = "name")
     private String name;
-
-    @OneToMany(mappedBy = "sensor")
-    private List<Measurement> measurementList;
 
     public Sensor() {
     }
@@ -42,11 +40,4 @@ public class Sensor {
         this.name = name;
     }
 
-    public List<Measurement> getMeasurementList() {
-        return measurementList;
-    }
-
-    public void setMeasurementList(List<Measurement> measurementList) {
-        this.measurementList = measurementList;
-    }
 }

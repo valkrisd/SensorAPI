@@ -5,9 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springcourse.SensorAPI.dto.SensorDTO;
 import org.springcourse.SensorAPI.models.Sensor;
 import org.springcourse.SensorAPI.services.SensorsService;
-import org.springcourse.SensorAPI.util.SensorNotCreatedException;
-import org.springcourse.SensorAPI.util.SensorErrorResponse;
-import org.springcourse.SensorAPI.util.SensorValidator;
+import org.springcourse.SensorAPI.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,22 +36,15 @@ public class SensorsController {
         sensorValidator.validate(sensor, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(("; "));
-            }
+            String errorMsg = ErrorsUtil.getErrorMessage(bindingResult);
 
             // выбрасываем кастомное исключение в случае, если не получилось создать объект типа Sensor
             // далее необходимо обработать его в отдельном @ExceptionHandler
-            throw new SensorNotCreatedException(errorMsg.toString());
+            throw new SensorNotCreatedException(errorMsg);
         }
 
         // сохраняем объект Sensor
-        sensorsService.save(convertToSensor(sensorDTO));
+        sensorsService.save(sensor);
 
         // возвращаем ResponseEntity с объектом Sensor и статусом CREATED
         return ResponseEntity.ok(HttpStatus.OK); // 201

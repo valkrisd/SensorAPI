@@ -1,12 +1,12 @@
 package org.springcourse.SensorAPI.services;
 
+import org.springcourse.SensorAPI.dto.SensorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springcourse.SensorAPI.models.Sensor;
 import org.springcourse.SensorAPI.repositories.SensorRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

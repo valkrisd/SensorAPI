@@ -25,6 +25,10 @@ public class MeasurementValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Measurement measurement = (Measurement) target;
+
+        if (measurement.getSensor() == null) {
+            return;
+        }
         if (sensorService.findByName(measurement.getSensor().getName()).isEmpty()) {
             errors.rejectValue("sensor", "", "Sensor with this name doesn't exist");
         }

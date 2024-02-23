@@ -7,7 +7,7 @@ import org.springcourse.SensorAPI.models.Sensor;
 import java.util.Optional;
 
 @Repository
-public interface SensorRepository extends JpaRepository<Sensor, Integer> {
+public interface SensorRepository extends JpaRepository<Sensor, String> {
 
     Optional<Sensor> findByName(String name);
 }

@@ -3,6 +3,7 @@ package org.springcourse.SensorAPI.controllers;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springcourse.SensorAPI.dto.MeasurementDTO;
+import org.springcourse.SensorAPI.dto.MeasurementsResponse;
 import org.springcourse.SensorAPI.models.Measurement;
 import org.springcourse.SensorAPI.services.MeasurementsService;
 import org.springcourse.SensorAPI.util.*;
@@ -10,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController // @Controller + @ResponseBody над каждым методом
@@ -36,22 +35,14 @@ public class MeasurementsController {
         measurementValidator.validate(measurement, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(("; "));
-            }
-
+            String errorMsg =ErrorsUtil.getErrorMessage(bindingResult);
             // выбрасываем кастомное исключение в случае, если не получилось создать объект типа Measurement
             // далее необходимо обработать его в отдельном @ExceptionHandler
-            throw new MeasurementNotCreatedException(errorMsg.toString());
+            throw new MeasurementNotCreatedException(errorMsg);
         }
 
         // сохраняем объект Sensor
-        measurementsService.save(convertToMeasurement(measurementDTO));
+        measurementsService.save(measurement);
 
         // возвращаем ResponseEntity с объектом Measurement и статусом CREATED
         return ResponseEntity.ok(HttpStatus.OK); // 201
@@ -59,15 +50,13 @@ public class MeasurementsController {
     }
 
     @GetMapping
-    public List<MeasurementDTO> getMeasurements() {
-        return measurementsService.findAll()
-                .stream()
-                .map(this::convertToMeasurementDTO)
-                .collect(Collectors.toList());
+    public MeasurementsResponse getMeasurements() {
+        return new MeasurementsResponse(measurementsService.findAll().stream().map(this::convertToMeasurementDTO)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/rainyDaysCount")
-    public long getRainyDaysCount() {
+    public Long getRainyDaysCount() {
         return measurementsService.rainyDaysCount();
     }
 
