@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Range;
 
 public class MeasurementDTO {
 
-    @Valid
+    @NotNull(message = "Sensor should not be empty")
     private SensorDTO sensor;
 
     @NotNull(message = "Value should not be empty")

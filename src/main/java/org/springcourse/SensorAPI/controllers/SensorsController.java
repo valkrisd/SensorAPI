@@ -62,7 +62,7 @@ public class SensorsController {
                 exception.getMessage(),
                 System.currentTimeMillis()
         );
-        // возвращаем ResponseEntity с объектом SensorErrorResponse и статусом NOT_FOUND
+        // возвращаем ResponseEntity с объектом SensorErrorResponse
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }

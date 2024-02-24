@@ -78,7 +78,7 @@ public class MeasurementsController {
                 exception.getMessage(),
                 System.currentTimeMillis()
         );
-        // возвращаем ResponseEntity с объектом MeasurementErrorResponse и статусом NOT_FOUND
+        // возвращаем ResponseEntity с объектом MeasurementErrorResponse
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }

@@ -8,7 +8,7 @@
 		<version>3.2.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.alishev.springcourse</groupId>
+	<groupId>org.springcourse</groupId>
 	<artifactId>SensorAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FirstRestApp</name>
