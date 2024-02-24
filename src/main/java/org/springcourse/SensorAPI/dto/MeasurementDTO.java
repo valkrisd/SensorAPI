@@ -3,28 +3,13 @@ package org.springcourse.SensorAPI.dto;
 import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 public class MeasurementDTO {
 
     @Valid
-    private Sensor sensor;
-
-    public static class Sensor {
-        @NotBlank(message = "Sensor name should not be empty")
-        private String name;
-
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
+    private SensorDTO sensor;
 
     @NotNull(message = "Value should not be empty")
     @Range(min = -100, max = 100, message = "Value should be between -100 and 100")
@@ -39,17 +24,17 @@ public class MeasurementDTO {
 
     }
 
-    public MeasurementDTO(Sensor sensor, Double value, Boolean isRaining) {
+    public MeasurementDTO(SensorDTO sensor, Double value, Boolean isRaining) {
         this.sensor = sensor;
         this.value = value;
         this.isRaining = isRaining;
     }
 
-    public Sensor getSensor() {
+    public SensorDTO getSensor() {
         return sensor;
     }
 
-    public void setSensor(Sensor sensor) {
+    public void setSensor(SensorDTO sensor) {
         this.sensor = sensor;
     }
 
